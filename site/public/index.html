@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Business Automation Assessment Landing Page</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "text-heading": "#111827",
+                        "text-body": "#374151",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .max-w-1200 {
+            max-width: 1200px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Modern Hover Animations */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            border-color: #2563EB;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+
+        .btn-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .smooth-scale {
+            transition: transform 0.4s ease;
+        }
+
+        .smooth-scale:hover {
+            transform: scale(1.02);
+        }
+
+        /* Scroll to Top */
+        #scrollToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #2463eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(36, 99, 235, 0.35);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        #scrollToTop.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        #scrollToTop:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(36, 99, 235, 0.4);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-body">
+
+    <!-- Hero Section -->
+    <section class="relative h-screen min-h-[700px] w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" data-alt="Business owner hero background"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('myScoreHero.jpg');">
+        </div>
+        <div class="relative z-10 max-w-1200 mx-auto px-6 text-center text-white">
+            <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-6">
+                Are You Tired of Playing Employee in Your Own Company?
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+                Take the free 2-minute assessment to discover which automations will give you back your time.
+            </p>
+            <button onclick="openIntakeForm()"
+                class="bg-primary text-white text-lg font-bold px-10 py-4 rounded-lg btn-hover shadow-xl shadow-blue-900/20">
+                Take the Free Assessment
+            </button>
+        </div>
+    </section>
+    <!-- Value Proposition Section -->
+    <section class="py-24 bg-white" id="value">
+        <div class="max-w-1200 mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-text-heading mb-4">This Assessment Will Help Transform
+                    You From Overwhelmed Operator to Strategic Business Owner</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-0 border border-gray-200">
+                <!-- Card 1 -->
+                <div class="p-10 border-r border-b md:border-b-0 border-gray-200 flex flex-col gap-6 card-hover">
+                    <span class="material-symbols-outlined text-primary text-4xl">timer</span>
+                    <h3 class="text-xl font-bold text-text-heading leading-tight">Measure What's Stealing Your Business
+                        Owner Time</h3>
+                    <p class="text-text-body text-sm leading-relaxed">Pinpoint repetitive tasks and low-value manual
+                        work that prevent you from high-level strategic thinking.</p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="p-10 border-r border-b md:border-b-0 border-gray-200 flex flex-col gap-6 hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined text-primary text-4xl">account_tree</span>
+                    <h3 class="text-xl font-bold text-text-heading leading-tight">Measure Your Business Systems Maturity
+                    </h3>
+                    <p class="text-text-body text-sm leading-relaxed">Benchmark your current processes against industry
+                        leaders and identify critical gaps in your digital infrastructure.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="p-10 flex flex-col gap-6 hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined text-primary text-4xl">trending_up</span>
+                    <h3 class="text-xl font-bold text-text-heading leading-tight">Measure Your Growth Acceleration
+                        Opportunities</h3>
+                    <p class="text-text-body text-sm leading-relaxed">Discover where AI can multiply your output without
+                        increasing your headcount or overhead costs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Case Study / Comparison Section -->
+    <section class="py-24 bg-gray-100" id="case-study">
+        <div class="max-w-1200 mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-text-heading mb-8 leading-tight">Why Smart Companies
+                        Are Choosing AI Over Human Hours</h2>
+                    <p class="text-text-body mb-6 leading-relaxed">Picture this: Your best software engineer just spent
+                        2.5 hours wrestling with a debugging nightmare. Meanwhile, a competitor's AI agent tackled the
+                        same challenge in under 45 minutes and moved on to three more tasks.</p>
+                    <p class="text-lg font-semibold text-text-heading mb-4">The Reality Check:</p>
+                    <ul class="space-y-4 mb-6">
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary font-bold">check_circle</span>
+                            <span class="text-text-body">AI agents complete expert-level tasks 60-75% faster than
+                                humans</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary font-bold">check_circle</span>
+                            <span class="text-text-body">No trial-and-error iterations or endless Stack Overflow
+                                searches</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary font-bold">check_circle</span>
+                            <span class="text-text-body">Write comprehensive solutions in one shot, not dozens of
+                                attempts</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary font-bold">check_circle</span>
+                            <span class="text-text-body">Success rates that consistently outperform traditional
+                                approaches</span>
+                        </li>
+                    </ul>
+                    <p class="text-text-body mb-6 leading-relaxed"><strong>The Bottom Line:</strong> Your team stops
+                        burning hours on repetitive coding marathons and starts focusing on strategic, creative work
+                        that actually moves the needle. The companies making this switch aren't just saving time—they're
+                        buying back their competitive edge.</p>
+                    <p class="text-sm text-gray-500 mb-8 italic">Based on <a
+                            href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+                            target="_blank" class="text-primary hover:underline">breakthrough research from METR</a>
+                        showing frontier AI models like GPT-5 completing tasks in a fraction of human time.</p>
+                    <button onclick="openIntakeForm()"
+                        class="bg-primary text-white font-bold px-8 py-4 rounded-lg btn-hover">
+                        Start Your Assessment
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 hover-lift">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex justify-between items-end">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Efficiency
+                                Benchmark</span>
+                            <span class="text-primary font-bold">+240%</span>
+                        </div>
+                        <div class="h-4 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary" style="width: 85%"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded">
+                                <p class="text-2xl font-bold text-text-heading">18hrs</p>
+                                <p class="text-xs text-gray-500">Avg. Time Saved/Wk</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded">
+                                <p class="text-2xl font-bold text-text-heading">4.2x</p>
+                                <p class="text-xs text-gray-500">Output Multiplier</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bio (About Gary) Section -->
+    <section class="py-24 bg-white" id="about">
+        <div class="max-w-1200 mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="md:w-1/2 space-y-6">
+                    <h2 class="text-4xl font-black text-text-heading leading-tight">About Gary</h2>
+                    <p class="text-lg font-semibold text-primary">Business Automation Specialist</p>
+                    <p class="text-text-body leading-relaxed">
+                        Most automation "experts" learned code in a classroom. I learned systems thinking in the
+                        trenches. 22 years diagnosing failing systems under pressure—from restaurant crashes during
+                        dinner rush to dead refrigerators with $500 of groceries inside—taught me something most
+                        developers never learn: how real businesses actually operate when everything's on the line.
+                    </p>
+                    <p class="text-text-body leading-relaxed">
+                        Over the past 3.5 years, I've combined this real-world systems experience with coding skills to
+                        help business owners escape operational chaos. I speak business owner, not developer jargon, and
+                        I solve real problems rather than implement cool tech for tech's sake. I understand the pressure
+                        you're under because I've lived it.
+                    </p>
+                    <p class="text-text-body leading-relaxed">
+                        The result? My clients get automation systems that actually fit how real businesses
+                        operate—built by someone who's spent two decades troubleshooting complex workflows when failure
+                        wasn't an option. My mission is simple: help business owners stop fighting their systems and
+                        start using them to build the freedom they started their business for.
+                    </p>
+                    <div class="pt-4">
+                        <button onclick="openIntakeForm()"
+                            class="bg-primary text-white font-bold px-8 py-3 rounded-lg btn-hover">
+                            Take the Assessment
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-lg -z-10"></div>
+                        <img alt="Professional portrait of Gary"
+                            class="w-full h-[500px] object-cover rounded-lg shadow-2xl smooth-scale"
+                            data-alt="Professional portrait of Gary" src="garyProfile1.png" />
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-lg -z-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial Section -->
+    <section class="py-24 bg-gray-100 border-t border-gray-100">
+        <div class="max-w-1200 mx-auto px-6 text-center">
+            <div class="mb-10">
+                <img alt="Jesse Holder profile"
+                    class="w-[120px] h-[120px] rounded-full mx-auto border-4 border-white shadow-lg object-cover"
+                    data-alt="Circular headshot of a smiling professional" src="testiHeadshot01.jpg" />
+            </div>
+            <blockquote
+                class="text-2xl md:text-3xl font-medium text-text-heading italic max-w-4xl mx-auto leading-relaxed mb-8">
+                "I took this assessment and got an immediate path to get started. It wasn't just generic advice—it
+                pinpointed exactly which processes were bleeding my team's time. We've since automated 40% of our
+                workflow."
+            </blockquote>
+            <div class="flex flex-col gap-1">
+                <span class="text-lg font-bold text-text-heading">Jesse Holder</span>
+                <span class="text-sm font-medium text-primary uppercase tracking-widest">CEO, Innovate Flow</span>
+            </div>
+        </div>
+    </section>
+    <!-- Final CTA Section -->
+    <section class="py-24 bg-blue-50">
+        <div class="max-w-1200 mx-auto px-6">
+            <div
+                class="bg-white p-12 md:p-20 rounded-2xl shadow-xl shadow-blue-500/5 text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10">
+                    <span class="material-symbols-outlined text-9xl">rocket_launch</span>
+                </div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-black text-text-heading mb-6 leading-tight">
+                        How Many Hours Could You <br /> Reclaim Next Week?
+                    </h2>
+                    <p class="text-lg text-text-body mb-10 max-w-2xl mx-auto">
+                        Start the free assessment. It's only <strong>6 questions</strong> and takes about <strong>2
+                            minutes</strong>. You'll receive a personalized roadmap immediately.
+                    </p>
+                    <button onclick="openIntakeForm()"
+                        class="bg-primary text-white text-xl font-bold px-12 py-5 rounded-lg btn-hover shadow-lg">
+                        Start Free Assessment
+                    </button>
+                    <p class="mt-6 text-xs text-gray-400 font-medium uppercase tracking-widest">No credit card required
+                        • Instant Results</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-1200 mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">smart_toy</span>
+                <span class="text-text-heading font-bold">xlGIANT</span>
+            </div>
+            <div class="flex gap-8 text-sm text-gray-400">
+                <a class="hover:text-primary transition-colors" href="privacy-policy.html">Privacy Policy</a>
+                <a class="hover:text-primary transition-colors" href="terms-of-service.html">Terms of Service</a>
+                <a class="hover:text-primary transition-colors cursor-pointer" onclick="openContactModal()">Contact</a>
+            </div>
+            <div class="text-sm text-gray-400">
+                © 2026 xlGIANT. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== INTAKE FORM MODAL ===================== -->
+    <div id="intakeModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+        style="background:rgba(0,0,0,0.6);">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-primary px-8 py-6">
+                <h2 class="text-2xl font-black text-white">Let's Get Started</h2>
+                <p class="text-blue-100 text-sm mt-1">Tell us a little about yourself before the assessment.</p>
+            </div>
+            <!-- Form Body -->
+            <div class="px-8 py-8">
+                <form id="intakeForm" onsubmit="startQuiz(event)">
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2" for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="Your first name"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" />
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2" for="email">Best Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" />
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2" for="businessName">Business Name
+                            or Company Role</label>
+                        <input type="text" id="businessName" name="businessName" required
+                            placeholder="e.g. Acme Co. or Marketing Director"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" />
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-primary text-white font-bold py-4 rounded-lg text-lg btn-hover">
+                        Start The Assessment →
+                    </button>
+                    <p class="text-center text-xs text-gray-400 mt-4">🔒 Your info is safe. No spam, ever.</p>
+                </form>
+            </div>
+            <!-- Close button -->
+            <button onclick="closeIntakeForm()"
+                class="absolute top-4 right-4 text-white text-2xl font-bold leading-none hover:opacity-70 transition"
+                style="position:absolute;top:1rem;right:1.25rem;">✕</button>
+        </div>
+    </div>
+
+    <!-- ===================== QUIZ MODAL ===================== -->
+    <div id="quizModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+        style="background:rgba(0,0,0,0.6);">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-auto overflow-hidden">
+            <!-- Quiz Header -->
+            <div class="bg-primary px-8 py-5 flex items-center justify-between">
+                <span id="quizStepLabel" class="text-white font-bold text-sm uppercase tracking-widest">Question 1 of
+                    6</span>
+                <span class="text-blue-100 text-sm">~2 minutes</span>
+            </div>
+            <!-- Progress Bar -->
+            <div class="h-2 bg-blue-100">
+                <div id="quizProgress" class="h-2 bg-primary transition-all duration-500" style="width:16.6%"></div>
+            </div>
+            <!-- Question Body -->
+            <div class="px-8 py-8">
+                <p id="quizQuestion" class="text-xl font-bold text-gray-900 mb-6 leading-snug"></p>
+                <div id="quizOptions" class="space-y-3"></div>
+            </div>
+            <!-- Navigation -->
+            <div class="px-8 pb-8 flex justify-between items-center">
+                <button id="quizPrev" onclick="prevQuestion()"
+                    class="text-gray-500 font-semibold px-6 py-3 rounded-lg border border-gray-200 hover:border-primary hover:text-primary transition disabled:opacity-30"
+                    disabled>← Back</button>
+                <button id="quizNext" onclick="nextQuestion()"
+                    class="bg-primary text-white font-bold px-8 py-3 rounded-lg btn-hover disabled:opacity-40"
+                    disabled>Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        // ── Config ──────────────────────────────────────────────────────────────
+        // Replace with your Google Apps Script Web App URL after deployment
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzlhe78WwtEtTzdLAa6iTPaxZp6yIW-1qLLeq12QONQMJ65aFjBZM0KuNwHIk9AP29t/exec';
+
+        // ── Quiz Data ────────────────────────────────────────────────────────────
+        const questions = [
+            {
+                q: "How much of your work week is spent on repetitive, operational tasks that don't directly grow your business?",
+                options: [
+                    { label: "A", text: "Less than 10% — I mostly focus on strategic work", points: 4 },
+                    { label: "B", text: "10–25% — Some repetitive tasks but manageable", points: 3 },
+                    { label: "C", text: "25–50% — A significant portion of my time", points: 2 },
+                    { label: "D", text: "More than 50% — I'm drowning in operational work", points: 1 }
+                ]
+            },
+            {
+                q: "How would you describe your current business processes and workflows?",
+                options: [
+                    { label: "A", text: "Fully documented and automated where possible", points: 4 },
+                    { label: "B", text: "Documented but mostly manual execution", points: 3 },
+                    { label: "C", text: "Some processes exist but inconsistently followed", points: 2 },
+                    { label: "D", text: "Mostly ad-hoc — things live in my head", points: 1 }
+                ]
+            },
+            {
+                q: "What happens to your business operations when you take a day off?",
+                options: [
+                    { label: "A", text: "Everything runs smoothly without me", points: 4 },
+                    { label: "B", text: "Minor delays but nothing critical", points: 3 },
+                    { label: "C", text: "Some things pile up and wait for my return", points: 2 },
+                    { label: "D", text: "Things break down or stop completely", points: 1 }
+                ]
+            },
+            {
+                q: "If you doubled your customer base tomorrow, how would your operations handle it?",
+                options: [
+                    { label: "A", text: "We'd scale smoothly with current systems", points: 4 },
+                    { label: "B", text: "We'd manage with some overtime and stress", points: 3 },
+                    { label: "C", text: "We'd struggle and likely drop balls", points: 2 },
+                    { label: "D", text: "We'd completely break down", points: 1 }
+                ]
+            },
+            {
+                q: "How are you currently using automation or AI in your business?",
+                options: [
+                    { label: "A", text: "Extensively — multiple integrated automations", points: 4 },
+                    { label: "B", text: "Moderately — a few tools like email automation", points: 3 },
+                    { label: "C", text: "Minimally — basic tools only", points: 2 },
+                    { label: "D", text: "Not at all — everything is manual", points: 1 }
+                ]
+            },
+            {
+                q: "How clearly can you identify tasks that would give you the biggest ROI if automated?",
+                options: [
+                    { label: "A", text: "Very clearly — I have a prioritized list", points: 4 },
+                    { label: "B", text: "Somewhat — I have ideas but haven't mapped it out", points: 3 },
+                    { label: "C", text: "Vaguely — I know automation could help but unsure where", points: 2 },
+                    { label: "D", text: "Not at all — I wouldn't know where to start", points: 1 }
+                ]
+            }
+        ];
+
+        // ── State ────────────────────────────────────────────────────────────────
+        let currentQ = 0;
+        let answers = new Array(questions.length).fill(null);
+        let userData = {};
+
+        // ── Modal Controls ───────────────────────────────────────────────────────
+        function openIntakeForm() {
+            const modal = document.getElementById('intakeModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeIntakeForm() {
+            const modal = document.getElementById('intakeModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        function openQuiz() {
+            const modal = document.getElementById('quizModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            renderQuestion();
+        }
+
+        // Close modals on backdrop click
+        document.getElementById('intakeModal').addEventListener('click', function (e) {
+            if (e.target === this) closeIntakeForm();
+        });
+
+        // ── Intake Form Submit ───────────────────────────────────────────────────
+        function startQuiz(e) {
+            e.preventDefault();
+            // Clear any previous result so retakes always start fresh
+            sessionStorage.removeItem('assessmentResult');
+            userData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                businessName: document.getElementById('businessName').value.trim(),
+                timestamp: new Date().toISOString()
+            };
+            closeIntakeForm();
+            currentQ = 0;
+            answers = new Array(questions.length).fill(null);
+            openQuiz();
+        }
+
+        // ── Quiz Rendering ───────────────────────────────────────────────────────
+        function renderQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('quizStepLabel').textContent = `Question ${currentQ + 1} of ${questions.length}`;
+            document.getElementById('quizProgress').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+            document.getElementById('quizQuestion').textContent = q.q;
+
+            const optContainer = document.getElementById('quizOptions');
+            optContainer.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const isSelected = answers[currentQ] === i;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `w-full text-left px-5 py-4 rounded-xl border-2 font-medium transition-all duration-200 flex items-start gap-3 ${isSelected
+                    ? 'border-primary bg-blue-50 text-primary'
+                    : 'border-gray-200 text-gray-700 hover:border-primary hover:bg-blue-50'
+                    }`;
+                btn.innerHTML = `<span class="font-black text-primary min-w-[1.5rem]">${opt.label}</span><span>${opt.text}</span>`;
+                btn.onclick = () => selectOption(i);
+                optContainer.appendChild(btn);
+            });
+
+            // Prev/Next button states
+            document.getElementById('quizPrev').disabled = currentQ === 0;
+            const nextBtn = document.getElementById('quizNext');
+            nextBtn.disabled = answers[currentQ] === null;
+            nextBtn.textContent = currentQ === questions.length - 1 ? 'See My Results →' : 'Next →';
+        }
+
+        function selectOption(index) {
+            answers[currentQ] = index;
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (answers[currentQ] === null) return;
+            if (currentQ < questions.length - 1) {
+                currentQ++;
+                renderQuestion();
+            } else {
+                submitResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                renderQuestion();
+            }
+        }
+
+        // ── Scoring & Submission ─────────────────────────────────────────────────
+        function submitResults() {
+            // Calculate score
+            let totalPoints = 0;
+            answers.forEach((answerIndex, qIndex) => {
+                if (answerIndex !== null) {
+                    totalPoints += questions[qIndex].options[answerIndex].points;
+                }
+            });
+            const maxPoints = questions.length * 4; // 24
+            const scorePercent = Math.round((totalPoints / maxPoints) * 100);
+
+            // Determine tier
+            // High score = well-documented, already automated = High tier (strategy call)
+            // Low score = manual, needs foundation = Low tier (course)
+            let tier;
+            if (scorePercent >= 67) tier = 'high';
+            else if (scorePercent >= 41) tier = 'medium';
+            else tier = 'low';
+
+            // Save to sessionStorage for results page
+            const resultData = {
+                ...userData,
+                scorePercent,
+                tier,
+                totalPoints,
+                maxPoints,
+                answers: answers.map((ai, qi) => ({
+                    question: questions[qi].q,
+                    answer: questions[qi].options[ai].text,
+                    points: questions[qi].options[ai].points
+                }))
+            };
+            sessionStorage.setItem('assessmentResult', JSON.stringify(resultData));
+
+            // Send to Google Sheets
+            sendToGoogleSheets(resultData);
+
+            // Navigate to results page
+            window.location.href = `results.html?score=${scorePercent}&tier=${tier}`;
+        }
+
+        function sendToGoogleSheets(data) {
+            if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') return;
+            // Must use text/plain in no-cors mode — application/json triggers a preflight that blocks the request
+            fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(data)
+            }).catch(err => console.warn('Sheet submission error:', err));
+        }
+    </script>
+
+    <!-- ===================== SCROLL TO TOP ===================== -->
+    <button id="scrollToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+        <span class="material-symbols-outlined" style="font-size:22px;">arrow_upward</span>
+    </button>
+
+    <!-- ===================== CONTACT MODAL ===================== -->
+    <div id="contactModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+        style="background:rgba(0,0,0,0.6);">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden" style="position:relative;">
+            <!-- Modal Header -->
+            <div class="bg-primary px-8 py-6">
+                <h2 class="text-2xl font-black text-white">Get In Touch</h2>
+                <p class="text-blue-100 text-sm mt-1">We'll get back to you as soon as possible.</p>
+            </div>
+            <!-- Form Body -->
+            <div class="px-8 py-8">
+                <div id="contactSuccess" class="hidden text-center py-6">
+                    <span class="material-symbols-outlined text-5xl text-green-500 mb-3 block">check_circle</span>
+                    <p class="text-xl font-bold text-text-heading mb-2">Message Sent!</p>
+                    <p class="text-gray-500">Thanks for reaching out. We'll be in touch shortly.</p>
+                    <button onclick="closeContactModal()"
+                        class="mt-6 bg-primary text-white font-bold px-8 py-3 rounded-lg btn-hover">Close</button>
+                </div>
+                <form id="contactForm" onsubmit="sendContactMessage(event)">
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2" for="contactName">Your
+                            Name</label>
+                        <input type="text" id="contactName" required placeholder="First Name"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" />
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2" for="contactEmail">Email
+                            Address</label>
+                        <input type="email" id="contactEmail" required placeholder="Best Email Address"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" />
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2"
+                            for="contactMessage">Message</label>
+                        <textarea id="contactMessage" required placeholder="How can we help you?" rows="4"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none"></textarea>
+                    </div>
+                    <button type="submit" id="contactSubmitBtn"
+                        class="w-full bg-primary text-white font-bold py-4 rounded-lg text-lg btn-hover">
+                        Send Message →
+                    </button>
+                    <p id="contactError" class="text-red-500 text-sm text-center mt-3 hidden">Something went wrong.
+                        Please try again.</p>
+                </form>
+            </div>
+            <button onclick="closeContactModal()" style="position:absolute;top:1rem;right:1.25rem;"
+                class="text-white text-2xl font-bold leading-none hover:opacity-70 transition">✕</button>
+        </div>
+    </div>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // ── EmailJS Config ───────────────────────────────────────────────────────
+        // Replace these with your EmailJS credentials when ready:
+        // 1. Sign up free at https://www.emailjs.com
+        // 2. Create a service (Gmail, Outlook, etc.) → get SERVICE_ID
+        // 3. Create an email template → get TEMPLATE_ID
+        // 4. Get your PUBLIC_KEY from Account > API Keys
+        const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+        const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        // ── Scroll To Top ────────────────────────────────────────────────────────
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollToTop');
+            if (window.scrollY > 400) btn.classList.add('visible');
+            else btn.classList.remove('visible');
+        });
+
+        // ── Contact Modal ────────────────────────────────────────────────────────
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+            // Reset form
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactForm').classList.remove('hidden');
+            document.getElementById('contactSuccess').classList.add('hidden');
+            document.getElementById('contactError').classList.add('hidden');
+        }
+
+        document.getElementById('contactModal').addEventListener('click', function (e) {
+            if (e.target === this) closeContactModal();
+        });
+
+        async function sendContactMessage(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contactSubmitBtn');
+            btn.textContent = 'Sending…';
+            btn.disabled = true;
+
+            const params = {
+                from_name: document.getElementById('contactName').value.trim(),
+                from_email: document.getElementById('contactEmail').value.trim(),
+                message: document.getElementById('contactMessage').value.trim(),
+            };
+
+            try {
+                if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+                    // Demo mode — show success without actually sending
+                    await new Promise(r => setTimeout(r, 800));
+                } else {
+                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+                }
+                document.getElementById('contactForm').classList.add('hidden');
+                document.getElementById('contactSuccess').classList.remove('hidden');
+            } catch (err) {
+                console.error('EmailJS error:', err);
+                document.getElementById('contactError').classList.remove('hidden');
+                btn.textContent = 'Send Message →';
+                btn.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

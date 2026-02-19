@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Your Automation Readiness Results | xlGIANT</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "text-heading": "#111827",
+                        "text-body": "#374151",
+                    },
+                    fontFamily: { "display": ["Inter", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .max-w-1200 {
+            max-width: 1200px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* SVG Speedometer Card */
+        .gauge-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
+            padding: 2rem 2.5rem 1.5rem;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 260px;
+        }
+
+        .gauge-card svg {
+            width: 220px;
+            height: auto;
+            overflow: visible;
+        }
+
+        #needleGroup {
+            transform-origin: 110px 110px;
+            transform: rotate(-90deg);
+            transition: transform 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .fade-in-delay {
+            animation: fadeIn 0.6s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+
+        .btn-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Tier colors */
+        .tier-high {
+            color: #10B981;
+        }
+
+        .tier-medium {
+            color: #F59E0B;
+        }
+
+        .tier-low {
+            color: #EF4444;
+        }
+
+        .tier-high-bg {
+            background-color: #ECFDF5;
+            border-color: #10B981;
+        }
+
+        .tier-medium-bg {
+            background-color: #FFFBEB;
+            border-color: #F59E0B;
+        }
+
+        .tier-low-bg {
+            background-color: #FEF2F2;
+            border-color: #EF4444;
+        }
+
+        .tier-high-btn {
+            background-color: #10B981;
+        }
+
+        .tier-medium-btn {
+            background-color: #F59E0B;
+        }
+
+        .tier-low-btn {
+            background-color: #EF4444;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-display text-text-body">
+
+    <!-- Results Hero -->
+    <section class="py-16 bg-gray-50" id="results-hero">
+        <div class="max-w-1200 mx-auto px-6">
+            <!-- Two-column layout: text left, gauge right -->
+            <div class="flex flex-col md:flex-row items-center gap-12">
+
+                <!-- Left: text -->
+                <div class="flex-1 text-left">
+                    <p class="text-primary font-bold uppercase tracking-widest text-sm mb-3 fade-in">Your Assessment
+                        Results</p>
+                    <h1 id="resultsHeading"
+                        class="text-3xl md:text-4xl font-black text-text-heading mb-3 leading-tight fade-in"></h1>
+                    <p id="nameGreeting" class="text-lg font-semibold text-primary mb-4 fade-in"></p>
+                    <p id="resultsSubheading" class="text-base text-gray-500 leading-relaxed fade-in-delay"></p>
+                </div>
+
+                <!-- Right: gauge card -->
+                <div class="flex-shrink-0 slide-up">
+                    <div class="gauge-card">
+                        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background arc -->
+                            <path d="M 15 110 A 95 95 0 0 1 205 110" fill="none" stroke="#e5e7eb" stroke-width="26"
+                                stroke-linecap="round" />
+                            <!-- Colored arc (drawn by JS) -->
+                            <path id="gaugeArc" d="M 15 110 A 95 95 0 0 1 205 110" fill="none" stroke="#e5e7eb"
+                                stroke-width="26" stroke-linecap="round" stroke-dasharray="0 1000"
+                                style="transition: stroke-dasharray 1.6s ease, stroke 0.3s ease;" />
+                            <!-- Needle -->
+                            <g id="needleGroup">
+                                <line x1="110" y1="110" x2="110" y2="28" stroke="#1f2937" stroke-width="3"
+                                    stroke-linecap="round" />
+                                <circle cx="110" cy="110" r="9" fill="#1f2937" />
+                                <circle cx="110" cy="110" r="4.5" fill="white" />
+                            </g>
+                        </svg>
+                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mt-1 mb-1">Your Overall
+                            Score</p>
+                        <p id="scoreNumber" class="text-5xl font-black" style="color:#111827;">0%</p>
+                        <div id="tierBadge"
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border-2 font-bold text-xs mt-3">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Video Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-2xl font-bold text-text-heading text-center mb-3">Watch: Your Personalized Next Steps</h2>
+            <p class="text-gray-500 text-center mb-8">Gary breaks down exactly what your score means and what to do
+                next.</p>
+            <iframe id="youtubeEmbed" class="w-full rounded-2xl shadow-xl" style="aspect-ratio:16/9; border:0;" src=""
+                title="Your Automation Results"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div id="ctaBox" class="rounded-2xl border-2 p-10 text-center">
+                <span id="ctaIcon" class="material-symbols-outlined text-5xl mb-4 block"></span>
+                <h2 id="ctaHeading" class="text-3xl font-black text-text-heading mb-3"></h2>
+                <p id="ctaBody" class="text-gray-500 mb-8 leading-relaxed max-w-xl mx-auto"></p>
+                <a id="ctaButton" href="#" target="_blank"
+                    class="inline-block text-white font-bold px-10 py-4 rounded-xl text-lg btn-hover shadow-lg">
+                </a>
+                <p class="text-xs text-gray-400 mt-4" id="ctaNote"></p>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="py-8 bg-white border-t border-gray-100">
+        <div class="max-w-1200 mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">smart_toy</span>
+                <span class="text-text-heading font-bold">xlGIANT</span>
+            </div>
+            <div class="text-sm text-gray-400">© 2026 xlGIANT. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ── Tier Config ──────────────────────────────────────────────────────────
+        const tierConfig = {
+            high: {
+                label: '🚀 High Automation Readiness',
+                color: '#10B981',
+                colorClass: 'tier-high',
+                bgClass: 'tier-high-bg',
+                btnClass: 'tier-high-btn',
+                heading: "You're Ready to Scale — Let's Build Your Automation Roadmap",
+                subheading: "Your business already has strong systems and documentation in place. You're perfectly positioned to layer in advanced automations that will multiply your output and free up your time for high-level strategy.",
+                ctaIcon: 'calendar_month',
+                ctaHeading: 'Book Your Free Strategy Call',
+                ctaBody: "You're in the top tier — your business is primed for serious automation. Let's get on a call and map out a custom strategy that could save you 15–20 hours per week.",
+                ctaButtonText: '📅 Book My Free Strategy Call',
+                ctaButtonHref: '#',
+                ctaNote: 'Limited spots available. No obligation.',
+                youtubeId: '6UxonqzwXF8'
+            },
+            medium: {
+                label: '⚡ Moderate Automation Potential',
+                color: '#F59E0B',
+                colorClass: 'tier-medium',
+                bgClass: 'tier-medium-bg',
+                btnClass: 'tier-medium-btn',
+                heading: "You're On the Right Track — Here's Your Next Step",
+                subheading: "You have some systems in place but there are clear gaps holding you back. The good news? A few targeted automations could dramatically change how your business operates.",
+                ctaIcon: 'picture_as_pdf',
+                ctaHeading: 'Download Your Free Automation Blueprint',
+                ctaBody: "We've put together a step-by-step PDF guide showing the exact automations businesses at your stage should implement first — with tools, timelines, and expected ROI.",
+                ctaButtonText: '📄 Download My Free Blueprint',
+                ctaButtonHref: '#',
+                ctaNote: 'Instant download. No credit card required.',
+                youtubeId: 'm47du3cqvu4'
+            },
+            low: {
+                label: '🏗️ Building Your Foundation',
+                color: '#EF4444',
+                colorClass: 'tier-low',
+                bgClass: 'tier-low-bg',
+                btnClass: 'tier-low-btn',
+                heading: "Every Expert Started Here — Let's Build Your Foundation",
+                subheading: "Your business is in the early stages of systems and automation. That's not a bad thing — it means there's massive opportunity ahead. The right foundation now will pay dividends for years.",
+                ctaIcon: 'school',
+                ctaHeading: 'Enroll in Your Free 6-Week Automation Course',
+                ctaBody: "We're giving you complimentary access to our 6-week Business Automation Foundations course. You'll go from zero to having your first automations running — step by step, no tech background required.",
+                ctaButtonText: '🎓 Claim My Free 6-Week Course',
+                ctaButtonHref: '#',
+                ctaNote: 'Completely free. No credit card needed.',
+                youtubeId: 'JWa2TRLdgYA'
+            }
+        };
+
+        // ── Load Results ─────────────────────────────────────────────────────────
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const stored = sessionStorage.getItem('assessmentResult');
+            const data = stored ? JSON.parse(stored) : {};
+
+            // Use sessionStorage as primary source (most reliable), URL params as fallback
+            const score = data.scorePercent || parseInt(params.get('score')) || 0;
+            const tier = data.tier || params.get('tier') || 'low';
+
+            // DEBUG — open browser console to verify
+            console.log('Results page loaded:', { score, tier, data });
+
+            const config = tierConfig[tier] || tierConfig.low;
+
+            // Heading & subheading
+            document.getElementById('resultsHeading').textContent = config.heading;
+            document.getElementById('resultsSubheading').textContent = config.subheading;
+
+            // Name greeting
+            if (data.firstName) {
+                document.getElementById('nameGreeting').textContent =
+                    `Great work, ${data.firstName}! Here's what your score means for your business.`;
+            }
+
+            // Needle + arc animation
+            // The arc path is a semicircle with r=95, so total arc length = π × 95 ≈ 298.45
+            // We use stroke-dasharray to fill from left (0%) to right (100%)
+            const needle = document.getElementById('needleGroup');
+            const arc = document.getElementById('gaugeArc');
+            const arcLen = Math.PI * 95; // ≈ 298.45
+            arc.style.stroke = config.color;
+            setTimeout(() => {
+                // Needle: starts at -90deg (far left), sweeps to +90deg (far right)
+                const rotation = -90 + (score / 100) * 180;
+                needle.style.transform = `rotate(${rotation}deg)`;
+                // Arc fill: dasharray filled portion grows from 0 to score%
+                const filled = (score / 100) * arcLen;
+                arc.style.strokeDasharray = `${filled} ${arcLen + 10}`;
+            }, 300);
+
+            // Score counter — counts up from 0 to actual score
+            const scoreEl = document.getElementById('scoreNumber');
+            scoreEl.style.color = config.color;
+            let count = 0;
+            const duration = 1800;
+            const stepTime = score > 0 ? duration / score : duration;
+            const interval = setInterval(() => {
+                count += 1;
+                if (count >= score) { count = score; clearInterval(interval); }
+                scoreEl.textContent = count + '%';
+            }, stepTime);
+            // Show 0% immediately if score is 0 (shouldn't happen but just in case)
+            if (score === 0) scoreEl.textContent = '0%';
+
+            // Tier badge
+            const badge = document.getElementById('tierBadge');
+            badge.textContent = config.label;
+            badge.style.color = config.color;
+            badge.style.borderColor = config.color;
+            badge.style.backgroundColor = config.color + '15';
+
+            // CTA Box
+            document.getElementById('ctaBox').classList.add(config.bgClass);
+            document.getElementById('ctaIcon').textContent = config.ctaIcon;
+            document.getElementById('ctaIcon').style.color = config.color;
+            document.getElementById('ctaHeading').textContent = config.ctaHeading;
+            document.getElementById('ctaBody').textContent = config.ctaBody;
+            document.getElementById('ctaNote').textContent = config.ctaNote;
+            const ctaBtn = document.getElementById('ctaButton');
+            ctaBtn.textContent = config.ctaButtonText;
+            ctaBtn.href = config.ctaButtonHref;
+            ctaBtn.classList.add(config.btnClass);
+
+            // YouTube embed
+            document.getElementById('youtubeEmbed').src =
+                `https://www.youtube.com/embed/${config.youtubeId}`;
+        });
+
+        // ── Share ────────────────────────────────────────────────────────────────
+        function shareResults() {
+            const params = new URLSearchParams(window.location.search);
+            const score = params.get('score') || '0';
+            const text = `I just scored ${score}% on the Business Automation Readiness Assessment! Find out your score at xlGIANT.`;
+            if (navigator.share) {
+                navigator.share({ title: 'My Automation Score', text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text + ' ' + window.location.href)
+                    .then(() => alert('Results link copied to clipboard!'));
+            }
+        }
+    </script>
+
+</body>
+
+</html>
