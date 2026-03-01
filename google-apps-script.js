@@ -20,7 +20,7 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME)
-                  || SpreadsheetApp.openById(SHEET_ID).insertSheet(SHEET_NAME);
+      || SpreadsheetApp.openById(SHEET_ID).insertSheet(SHEET_NAME);
 
     // Write headers if sheet is empty
     if (sheet.getLastRow() === 0) {
@@ -38,6 +38,12 @@ function doPost(e) {
         'Q4 Answer', 'Q4 Points',
         'Q5 Answer', 'Q5 Points',
         'Q6 Answer', 'Q6 Points',
+        'Q7 Answer', 'Q7 Points',
+        'Q8 Answer', 'Q8 Points',
+        'Q9 Answer', 'Q9 Points',
+        'Q10 Answer', 'Q10 Points',
+        'Q11 Answer', 'Q11 Points',
+        'Q12 Answer', 'Q12 Points',
       ]);
       // Bold the header row
       sheet.getRange(1, 1, 1, sheet.getLastColumn()).setFontWeight('bold');
@@ -62,6 +68,40 @@ function doPost(e) {
 
     sheet.appendRow(row);
 
+    // Send personalized results email
+    if (data.email) {
+      let tierName = '';
+      let videoUrl = '';
+      let messageBody = '';
+
+      if (data.tier === 'systemized') {
+        tierName = 'Systemized';
+        videoUrl = 'https://youtu.be/VqDMZLR30x4?si=K0Xbxvtt3n8IqRwF';
+        messageBody = `You're Already Ahead — Let's Build on Your Strong Foundation.\n\nWith a score of ${data.totalPoints} out of 60, your business shows few operational leaks. You're running lean and systemized — now it's time to layer in advanced automation to compound your edge.`;
+      } else if (data.tier === 'hidden') {
+        tierName = 'Hidden Leaks';
+        videoUrl = 'https://youtu.be/AURRyVY_XX8?si=1eCFd-je6MR6YefC';
+        messageBody = `You Have Hidden Leaks — Here's How to Plug Them.\n\nWith a score of ${data.totalPoints} out of 60, your business has real leaks hiding in plain sight. You're losing time, revenue, and energy to manual processes that can be fixed with the right systems.`;
+      } else {
+        tierName = 'Scaling Ceiling';
+        videoUrl = 'https://youtu.be/7JJBs4thC3s?si=qFklrq6q_vszzb2O';
+        messageBody = `Your Business Has a Scaling Ceiling — Let's Break Through It.\n\nWith a score of ${data.totalPoints} out of 60, your business is heavily dependent on you and manual effort. The good news: every leak we identified is fixable.`;
+      }
+
+      const subject = `Your Automation Assessment Results: ${tierName}`;
+      const body = `Hi ${data.firstName || 'there'},\n\nThank you for taking the Business Automation Assessment!\n\nHere are your results:\nScore: ${data.totalPoints} out of 60\nTier: ${tierName}\n\n${messageBody}\n\nWatch Gary break down your personalized next steps here: ${videoUrl}\n\nBest,\nThe xlGIANT Team`;
+
+      try {
+        MailApp.sendEmail({
+          to: data.email,
+          subject: subject,
+          body: body
+        });
+      } catch (e) {
+        Logger.log('Failed to send email to ' + data.email + ': ' + e.toString());
+      }
+    }
+
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -77,4 +117,22 @@ function doPost(e) {
 function testConnection() {
   const sheet = SpreadsheetApp.openById(SHEET_ID);
   Logger.log('Connected to: ' + sheet.getName());
+}
+
+// Test function - run this manually to FORCE Google to ask for Email permissions!
+function testEmail() {
+  const testAddress = Session.getActiveUser().getEmail(); // Sends to your own Google account email
+  if (!testAddress) {
+    Logger.log('Could not determine your email. Please type it directly in the sendEmail call below.');
+    // MailApp.sendEmail('your@email.com', 'Test Subject', 'Test Body');
+    return;
+  }
+
+  MailApp.sendEmail({
+    to: testAddress,
+    subject: "xlGIANT - Email Authorization Test",
+    body: "If you are reading this, your Google Apps Script is now officially authorized to send emails on your behalf!"
+  });
+
+  Logger.log('Test email sent to: ' + testAddress);
 }

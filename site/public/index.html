@@ -331,7 +331,7 @@
                         How Many Hours Could You <br /> Reclaim Next Week?
                     </h2>
                     <p class="text-lg text-text-body mb-10 max-w-2xl mx-auto">
-                        Start the free assessment. It's only <strong>6 questions</strong> and takes about <strong>2
+                        Start the free assessment. It's only <strong>12 questions</strong> and takes about <strong>3
                             minutes</strong>. You'll receive a personalized roadmap immediately.
                     </p>
                     <button onclick="openIntakeForm()"
@@ -413,7 +413,7 @@
             <div class="bg-primary px-8 py-5 flex items-center justify-between">
                 <span id="quizStepLabel" class="text-white font-bold text-sm uppercase tracking-widest">Question 1 of
                     6</span>
-                <span class="text-blue-100 text-sm">~2 minutes</span>
+                <span class="text-blue-100 text-sm">~3 minutes</span>
             </div>
             <!-- Progress Bar -->
             <div class="h-2 bg-blue-100">
@@ -421,6 +421,7 @@
             </div>
             <!-- Question Body -->
             <div class="px-8 py-8">
+                <p id="quizSection" class="text-xs font-bold uppercase tracking-widest text-primary mb-2"></p>
                 <p id="quizQuestion" class="text-xl font-bold text-gray-900 mb-6 leading-snug"></p>
                 <div id="quizOptions" class="space-y-3"></div>
             </div>
@@ -443,61 +444,32 @@
         const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzlhe78WwtEtTzdLAa6iTPaxZp6yIW-1qLLeq12QONQMJ65aFjBZM0KuNwHIk9AP29t/exec';
 
         // ── Quiz Data ────────────────────────────────────────────────────────────
+        // Answer scale shared by all questions (1 = Never, 5 = Always)
+        const scaleOptions = [
+            { label: "1", text: "Never", points: 1 },
+            { label: "2", text: "Rarely", points: 2 },
+            { label: "3", text: "Sometimes", points: 3 },
+            { label: "4", text: "Often", points: 4 },
+            { label: "5", text: "Always", points: 5 }
+        ];
+
         const questions = [
-            {
-                q: "How much of your work week is spent on repetitive, operational tasks that don't directly grow your business?",
-                options: [
-                    { label: "A", text: "Less than 10% — I mostly focus on strategic work", points: 4 },
-                    { label: "B", text: "10–25% — Some repetitive tasks but manageable", points: 3 },
-                    { label: "C", text: "25–50% — A significant portion of my time", points: 2 },
-                    { label: "D", text: "More than 50% — I'm drowning in operational work", points: 1 }
-                ]
-            },
-            {
-                q: "How would you describe your current business processes and workflows?",
-                options: [
-                    { label: "A", text: "Fully documented and automated where possible", points: 4 },
-                    { label: "B", text: "Documented but mostly manual execution", points: 3 },
-                    { label: "C", text: "Some processes exist but inconsistently followed", points: 2 },
-                    { label: "D", text: "Mostly ad-hoc — things live in my head", points: 1 }
-                ]
-            },
-            {
-                q: "What happens to your business operations when you take a day off?",
-                options: [
-                    { label: "A", text: "Everything runs smoothly without me", points: 4 },
-                    { label: "B", text: "Minor delays but nothing critical", points: 3 },
-                    { label: "C", text: "Some things pile up and wait for my return", points: 2 },
-                    { label: "D", text: "Things break down or stop completely", points: 1 }
-                ]
-            },
-            {
-                q: "If you doubled your customer base tomorrow, how would your operations handle it?",
-                options: [
-                    { label: "A", text: "We'd scale smoothly with current systems", points: 4 },
-                    { label: "B", text: "We'd manage with some overtime and stress", points: 3 },
-                    { label: "C", text: "We'd struggle and likely drop balls", points: 2 },
-                    { label: "D", text: "We'd completely break down", points: 1 }
-                ]
-            },
-            {
-                q: "How are you currently using automation or AI in your business?",
-                options: [
-                    { label: "A", text: "Extensively — multiple integrated automations", points: 4 },
-                    { label: "B", text: "Moderately — a few tools like email automation", points: 3 },
-                    { label: "C", text: "Minimally — basic tools only", points: 2 },
-                    { label: "D", text: "Not at all — everything is manual", points: 1 }
-                ]
-            },
-            {
-                q: "How clearly can you identify tasks that would give you the biggest ROI if automated?",
-                options: [
-                    { label: "A", text: "Very clearly — I have a prioritized list", points: 4 },
-                    { label: "B", text: "Somewhat — I have ideas but haven't mapped it out", points: 3 },
-                    { label: "C", text: "Vaguely — I know automation could help but unsure where", points: 2 },
-                    { label: "D", text: "Not at all — I wouldn't know where to start", points: 1 }
-                ]
-            }
+            // ── Time Leaks ───────────────────────────────────────────────────────
+            { section: "⏰ Time Leaks", q: "I repeat tasks every week manually.", options: scaleOptions },
+            { section: "⏰ Time Leaks", q: "I personally respond to most inquiries.", options: scaleOptions },
+            { section: "⏰ Time Leaks", q: "I handle scheduling myself.", options: scaleOptions },
+            // ── Revenue Leaks ────────────────────────────────────────────────────
+            { section: "💸 Revenue Leaks", q: "I don't follow up with every lead.", options: scaleOptions },
+            { section: "💸 Revenue Leaks", q: "Leads sometimes go cold.", options: scaleOptions },
+            { section: "💸 Revenue Leaks", q: "Some prospects fall through the cracks.", options: scaleOptions },
+            // ── Opportunity Leaks ────────────────────────────────────────────────
+            { section: "🔍 Opportunity Leaks", q: "I don't respond instantly to inquiries.", options: scaleOptions },
+            { section: "🔍 Opportunity Leaks", q: "I rely on memory or notes instead of systems.", options: scaleOptions },
+            { section: "🔍 Opportunity Leaks", q: "I don't track where leads come from.", options: scaleOptions },
+            // ── Energy Leaks ────────────────────────────────────────────────────
+            { section: "🔋 Energy Leaks", q: "I feel mentally drained by admin tasks.", options: scaleOptions },
+            { section: "🔋 Energy Leaks", q: "My business depends on me daily.", options: scaleOptions },
+            { section: "🔋 Energy Leaks", q: "If I disappeared for a week, things would slow down.", options: scaleOptions }
         ];
 
         // ── State ────────────────────────────────────────────────────────────────
@@ -555,6 +527,7 @@
             const q = questions[currentQ];
             document.getElementById('quizStepLabel').textContent = `Question ${currentQ + 1} of ${questions.length}`;
             document.getElementById('quizProgress').style.width = `${((currentQ + 1) / questions.length) * 100}%`;
+            document.getElementById('quizSection').textContent = q.section;
             document.getElementById('quizQuestion').textContent = q.q;
 
             const optContainer = document.getElementById('quizOptions');
@@ -603,23 +576,23 @@
 
         // ── Scoring & Submission ─────────────────────────────────────────────────
         function submitResults() {
-            // Calculate score
+            // Calculate score (1–5 per question, 12 questions, max = 60)
             let totalPoints = 0;
             answers.forEach((answerIndex, qIndex) => {
                 if (answerIndex !== null) {
                     totalPoints += questions[qIndex].options[answerIndex].points;
                 }
             });
-            const maxPoints = questions.length * 4; // 24
+            const maxPoints = questions.length * 5; // 60
             const scorePercent = Math.round((totalPoints / maxPoints) * 100);
 
-            // Determine tier
-            // High score = well-documented, already automated = High tier (strategy call)
-            // Low score = manual, needs foundation = Low tier (course)
+            // Determine tier based on raw points
+            // Low score  = few leaks = Systemized
+            // High score = many leaks = Scaling ceiling
             let tier;
-            if (scorePercent >= 67) tier = 'high';
-            else if (scorePercent >= 41) tier = 'medium';
-            else tier = 'low';
+            if (totalPoints <= 24) tier = 'systemized';   // 12–24
+            else if (totalPoints <= 40) tier = 'hidden';  // 25–40
+            else tier = 'scaling';                        // 41–60
 
             // Save to sessionStorage for results page
             const resultData = {
@@ -629,6 +602,7 @@
                 totalPoints,
                 maxPoints,
                 answers: answers.map((ai, qi) => ({
+                    section: questions[qi].section,
                     question: questions[qi].q,
                     answer: questions[qi].options[ai].text,
                     points: questions[qi].options[ai].points

@@ -105,42 +105,42 @@
         }
 
         /* Tier colors */
-        .tier-high {
+        .tier-systemized {
             color: #10B981;
         }
 
-        .tier-medium {
+        .tier-hidden {
             color: #F59E0B;
         }
 
-        .tier-low {
+        .tier-scaling {
             color: #EF4444;
         }
 
-        .tier-high-bg {
+        .tier-systemized-bg {
             background-color: #ECFDF5;
             border-color: #10B981;
         }
 
-        .tier-medium-bg {
+        .tier-hidden-bg {
             background-color: #FFFBEB;
             border-color: #F59E0B;
         }
 
-        .tier-low-bg {
+        .tier-scaling-bg {
             background-color: #FEF2F2;
             border-color: #EF4444;
         }
 
-        .tier-high-btn {
+        .tier-systemized-btn {
             background-color: #10B981;
         }
 
-        .tier-medium-btn {
+        .tier-hidden-btn {
             background-color: #F59E0B;
         }
 
-        .tier-low-btn {
+        .tier-scaling-btn {
             background-color: #EF4444;
         }
     </style>
@@ -164,30 +164,15 @@
                     <p id="resultsSubheading" class="text-base text-gray-500 leading-relaxed fade-in-delay"></p>
                 </div>
 
-                <!-- Right: gauge card -->
+                <!-- Right: score card -->
                 <div class="flex-shrink-0 slide-up">
-                    <div class="gauge-card">
-                        <svg viewBox="0 0 220 130" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background arc -->
-                            <path d="M 15 110 A 95 95 0 0 1 205 110" fill="none" stroke="#e5e7eb" stroke-width="26"
-                                stroke-linecap="round" />
-                            <!-- Colored arc (drawn by JS) -->
-                            <path id="gaugeArc" d="M 15 110 A 95 95 0 0 1 205 110" fill="none" stroke="#e5e7eb"
-                                stroke-width="26" stroke-linecap="round" stroke-dasharray="0 1000"
-                                style="transition: stroke-dasharray 1.6s ease, stroke 0.3s ease;" />
-                            <!-- Needle -->
-                            <g id="needleGroup">
-                                <line x1="110" y1="110" x2="110" y2="28" stroke="#1f2937" stroke-width="3"
-                                    stroke-linecap="round" />
-                                <circle cx="110" cy="110" r="9" fill="#1f2937" />
-                                <circle cx="110" cy="110" r="4.5" fill="white" />
-                            </g>
-                        </svg>
-                        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mt-1 mb-1">Your Overall
-                            Score</p>
-                        <p id="scoreNumber" class="text-5xl font-black" style="color:#111827;">0%</p>
+                    <div class="gauge-card justify-center">
+                        <p class="text-sm font-bold uppercase tracking-widest text-gray-400 mt-4 mb-2">Your Leak Score
+                        </p>
+                        <p id="scoreNumber" class="text-7xl font-black my-4" style="color:#111827;">0</p>
+                        <p class="text-sm text-gray-400 font-semibold mb-4">out of 60</p>
                         <div id="tierBadge"
-                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border-2 font-bold text-xs mt-3">
+                            class="inline-flex items-center gap-2 px-6 py-2 rounded-full border-2 font-bold text-sm mt-3">
                         </div>
                     </div>
                 </div>
@@ -203,26 +188,13 @@
             <p class="text-gray-500 text-center mb-8">Gary breaks down exactly what your score means and what to do
                 next.</p>
             <iframe id="youtubeEmbed" class="w-full rounded-2xl shadow-xl" style="aspect-ratio:16/9; border:0;" src=""
-                title="Your Automation Results"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-3xl mx-auto px-6">
-            <div id="ctaBox" class="rounded-2xl border-2 p-10 text-center">
-                <span id="ctaIcon" class="material-symbols-outlined text-5xl mb-4 block"></span>
-                <h2 id="ctaHeading" class="text-3xl font-black text-text-heading mb-3"></h2>
-                <p id="ctaBody" class="text-gray-500 mb-8 leading-relaxed max-w-xl mx-auto"></p>
-                <a id="ctaButton" href="#" target="_blank"
-                    class="inline-block text-white font-bold px-10 py-4 rounded-xl text-lg btn-hover shadow-lg">
-                </a>
-                <p class="text-xs text-gray-400 mt-4" id="ctaNote"></p>
-            </div>
-        </div>
-    </section>
+
 
 
 
@@ -242,53 +214,53 @@
     <script>
         // ── Tier Config ──────────────────────────────────────────────────────────
         const tierConfig = {
-            high: {
-                label: '🚀 High Automation Readiness',
+            systemized: {
+                label: 'Systemized',
                 color: '#10B981',
-                colorClass: 'tier-high',
-                bgClass: 'tier-high-bg',
-                btnClass: 'tier-high-btn',
-                heading: "You're Ready to Scale — Let's Build Your Automation Roadmap",
-                subheading: "Your business already has strong systems and documentation in place. You're perfectly positioned to layer in advanced automations that will multiply your output and free up your time for high-level strategy.",
+                colorClass: 'tier-systemized',
+                bgClass: 'tier-systemized-bg',
+                btnClass: 'tier-systemized-btn',
+                heading: "You're Already Ahead — Let's Build on Your Strong Foundation",
+                subheading: "With a score of 12–24, your business shows few operational leaks. You're running lean and systemized — now it's time to layer in advanced automation to compound your edge.",
                 ctaIcon: 'calendar_month',
                 ctaHeading: 'Book Your Free Strategy Call',
-                ctaBody: "You're in the top tier — your business is primed for serious automation. Let's get on a call and map out a custom strategy that could save you 15–20 hours per week.",
+                ctaBody: "You're in the top tier — your business is primed for advanced automation. Let's map out a custom strategy that could free up 15–20 more hours per week and accelerate your growth.",
                 ctaButtonText: '📅 Book My Free Strategy Call',
                 ctaButtonHref: '#',
                 ctaNote: 'Limited spots available. No obligation.',
-                youtubeId: '6UxonqzwXF8'
+                youtubeId: 'VqDMZLR30x4?si=K0Xbxvtt3n8IqRwF'
             },
-            medium: {
-                label: '⚡ Moderate Automation Potential',
+            hidden: {
+                label: 'Hidden Leaks',
                 color: '#F59E0B',
-                colorClass: 'tier-medium',
-                bgClass: 'tier-medium-bg',
-                btnClass: 'tier-medium-btn',
-                heading: "You're On the Right Track — Here's Your Next Step",
-                subheading: "You have some systems in place but there are clear gaps holding you back. The good news? A few targeted automations could dramatically change how your business operates.",
+                colorClass: 'tier-hidden',
+                bgClass: 'tier-hidden-bg',
+                btnClass: 'tier-hidden-btn',
+                heading: "You Have Hidden Leaks — Here's How to Plug Them",
+                subheading: "With a score of 25–40, your business has real leaks hiding in plain sight. You're losing time, revenue, and energy to manual processes that can be fixed with the right systems.",
                 ctaIcon: 'picture_as_pdf',
                 ctaHeading: 'Download Your Free Automation Blueprint',
-                ctaBody: "We've put together a step-by-step PDF guide showing the exact automations businesses at your stage should implement first — with tools, timelines, and expected ROI.",
+                ctaBody: "We've built a step-by-step PDF guide showing the exact automations that businesses at your stage should implement first — with tools, timelines, and expected ROI.",
                 ctaButtonText: '📄 Download My Free Blueprint',
                 ctaButtonHref: '#',
                 ctaNote: 'Instant download. No credit card required.',
-                youtubeId: 'm47du3cqvu4'
+                youtubeId: 'AURRyVY_XX8?si=1eCFd-je6MR6YefC'
             },
-            low: {
-                label: '🏗️ Building Your Foundation',
+            scaling: {
+                label: 'Scaling Ceiling',
                 color: '#EF4444',
-                colorClass: 'tier-low',
-                bgClass: 'tier-low-bg',
-                btnClass: 'tier-low-btn',
-                heading: "Every Expert Started Here — Let's Build Your Foundation",
-                subheading: "Your business is in the early stages of systems and automation. That's not a bad thing — it means there's massive opportunity ahead. The right foundation now will pay dividends for years.",
+                colorClass: 'tier-scaling',
+                bgClass: 'tier-scaling-bg',
+                btnClass: 'tier-scaling-btn',
+                heading: "Your Business Has a Scaling Ceiling — Let's Break Through It",
+                subheading: "With a score of 41–60, your business is heavily dependent on you and manual effort. The good news: every leak we identified is fixable. The right foundation now will pay dividends for years.",
                 ctaIcon: 'school',
                 ctaHeading: 'Enroll in Your Free 6-Week Automation Course',
                 ctaBody: "We're giving you complimentary access to our 6-week Business Automation Foundations course. You'll go from zero to having your first automations running — step by step, no tech background required.",
                 ctaButtonText: '🎓 Claim My Free 6-Week Course',
                 ctaButtonHref: '#',
                 ctaNote: 'Completely free. No credit card needed.',
-                youtubeId: 'JWa2TRLdgYA'
+                youtubeId: '7JJBs4thC3s?si=qFklrq6q_vszzb2O'
             }
         };
 
@@ -299,13 +271,14 @@
             const data = stored ? JSON.parse(stored) : {};
 
             // Use sessionStorage as primary source (most reliable), URL params as fallback
-            const score = data.scorePercent || parseInt(params.get('score')) || 0;
-            const tier = data.tier || params.get('tier') || 'low';
+            const score = data.totalPoints || parseInt(params.get('score')) || 0;
+            const maxScore = data.maxPoints || 60;
+            const tier = data.tier || params.get('tier') || 'scaling';
 
             // DEBUG — open browser console to verify
-            console.log('Results page loaded:', { score, tier, data });
+            console.log('Results page loaded:', { score, maxScore, tier, data });
 
-            const config = tierConfig[tier] || tierConfig.low;
+            const config = tierConfig[tier] || tierConfig.scaling;
 
             // Heading & subheading
             document.getElementById('resultsHeading').textContent = config.heading;
@@ -317,23 +290,9 @@
                     `Great work, ${data.firstName}! Here's what your score means for your business.`;
             }
 
-            // Needle + arc animation
-            // The arc path is a semicircle with r=95, so total arc length = π × 95 ≈ 298.45
-            // We use stroke-dasharray to fill from left (0%) to right (100%)
-            const needle = document.getElementById('needleGroup');
-            const arc = document.getElementById('gaugeArc');
-            const arcLen = Math.PI * 95; // ≈ 298.45
-            arc.style.stroke = config.color;
-            setTimeout(() => {
-                // Needle: starts at -90deg (far left), sweeps to +90deg (far right)
-                const rotation = -90 + (score / 100) * 180;
-                needle.style.transform = `rotate(${rotation}deg)`;
-                // Arc fill: dasharray filled portion grows from 0 to score%
-                const filled = (score / 100) * arcLen;
-                arc.style.strokeDasharray = `${filled} ${arcLen + 10}`;
-            }, 300);
 
-            // Score counter — counts up from 0 to actual score
+
+            // Score counter — counts up from 0 to raw score
             const scoreEl = document.getElementById('scoreNumber');
             scoreEl.style.color = config.color;
             let count = 0;
@@ -342,10 +301,9 @@
             const interval = setInterval(() => {
                 count += 1;
                 if (count >= score) { count = score; clearInterval(interval); }
-                scoreEl.textContent = count + '%';
+                scoreEl.textContent = count;
             }, stepTime);
-            // Show 0% immediately if score is 0 (shouldn't happen but just in case)
-            if (score === 0) scoreEl.textContent = '0%';
+            if (score === 0) scoreEl.textContent = '0';
 
             // Tier badge
             const badge = document.getElementById('tierBadge');
@@ -354,17 +312,7 @@
             badge.style.borderColor = config.color;
             badge.style.backgroundColor = config.color + '15';
 
-            // CTA Box
-            document.getElementById('ctaBox').classList.add(config.bgClass);
-            document.getElementById('ctaIcon').textContent = config.ctaIcon;
-            document.getElementById('ctaIcon').style.color = config.color;
-            document.getElementById('ctaHeading').textContent = config.ctaHeading;
-            document.getElementById('ctaBody').textContent = config.ctaBody;
-            document.getElementById('ctaNote').textContent = config.ctaNote;
-            const ctaBtn = document.getElementById('ctaButton');
-            ctaBtn.textContent = config.ctaButtonText;
-            ctaBtn.href = config.ctaButtonHref;
-            ctaBtn.classList.add(config.btnClass);
+
 
             // YouTube embed
             document.getElementById('youtubeEmbed').src =
@@ -375,9 +323,9 @@
         function shareResults() {
             const params = new URLSearchParams(window.location.search);
             const score = params.get('score') || '0';
-            const text = `I just scored ${score}% on the Business Automation Readiness Assessment! Find out your score at xlGIANT.`;
+            const text = `I just scored ${score}/60 on the Business Automation Leak Assessment! Find out your score at xlGIANT.`;
             if (navigator.share) {
-                navigator.share({ title: 'My Automation Score', text, url: window.location.href });
+                navigator.share({ title: 'My Automation Leak Score', text, url: window.location.href });
             } else {
                 navigator.clipboard.writeText(text + ' ' + window.location.href)
                     .then(() => alert('Results link copied to clipboard!'));
