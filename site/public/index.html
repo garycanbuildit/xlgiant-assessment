@@ -575,7 +575,7 @@
         }
 
         // ── Scoring & Submission ─────────────────────────────────────────────────
-        function submitResults() {
+        async function submitResults() {
             // Calculate score (1–5 per question, 12 questions, max = 60)
             let totalPoints = 0;
             answers.forEach((answerIndex, qIndex) => {
@@ -610,22 +610,36 @@
             };
             sessionStorage.setItem('assessmentResult', JSON.stringify(resultData));
 
-            // Send to Google Sheets
-            sendToGoogleSheets(resultData);
+            // Change button wording while submitting
+            const nextBtn = document.getElementById('quizNext');
+            nextBtn.textContent = 'Calculating...';
+            nextBtn.disabled = true;
+
+            // Send to Google Sheets and THEN navigate
+            await sendToGoogleSheets(resultData);
 
             // Navigate to results page
             window.location.href = `results.html?score=${scorePercent}&tier=${tier}`;
         }
 
-        function sendToGoogleSheets(data) {
+        async function sendToGoogleSheets(data) {
             if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') return;
-            // Must use text/plain in no-cors mode — application/json triggers a preflight that blocks the request
-            fetch(GOOGLE_SHEET_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify(data)
-            }).catch(err => console.warn('Sheet submission error:', err));
+
+            try {
+                // Must use text/plain in no-cors mode — application/json triggers a preflight that blocks the request
+                await fetch(GOOGLE_SHEET_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(data)
+                });
+
+                // Add a small 400ms buffer after fetch resolves just to be absolutely sure the network dispatcher 
+                // doesn't cut the socket mid-flight when the browser initiates the sudden window.location.href redirect
+                await new Promise(r => setTimeout(r, 400));
+            } catch (err) {
+                console.warn('Sheet submission error:', err);
+            }
         }
     </script>
 
