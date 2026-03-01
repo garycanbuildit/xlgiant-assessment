@@ -19,8 +19,17 @@ const SHEET_NAME = 'Responses';
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME)
-      || SpreadsheetApp.openById(SHEET_ID).insertSheet(SHEET_NAME);
+    let ss;
+
+    // Automatically use the attached spreadsheet if the explicit ID was forgotten
+    if (SHEET_ID === 'YOUR_GOOGLE_SHEET_ID_HERE') {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+      if (!ss) throw new Error("Script is not bound to a Sheet and no SHEET_ID provided.");
+    } else {
+      ss = SpreadsheetApp.openById(SHEET_ID);
+    }
+
+    const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
 
     // Write headers if sheet is empty
     if (sheet.getLastRow() === 0) {
@@ -57,6 +66,7 @@ function doPost(e) {
       data.businessName || '',
       data.scorePercent || 0,
       data.tier || '',
+      data.totalPoints || 0,
     ];
 
     // Add each answer
@@ -107,6 +117,7 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
+    console.error('doPost Error:', err); // Let it appear in the Execution log!
     return ContentService
       .createTextOutput(JSON.stringify({ success: false, error: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -115,8 +126,14 @@ function doPost(e) {
 
 // Test function - run this manually to verify sheet connection
 function testConnection() {
-  const sheet = SpreadsheetApp.openById(SHEET_ID);
-  Logger.log('Connected to: ' + sheet.getName());
+  let ss;
+  if (SHEET_ID === 'YOUR_GOOGLE_SHEET_ID_HERE') {
+    ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) throw new Error("Script is not bound to a Sheet and no SHEET_ID provided.");
+  } else {
+    ss = SpreadsheetApp.openById(SHEET_ID);
+  }
+  Logger.log('Connected to: ' + ss.getName());
 }
 
 // Test function - run this manually to FORCE Google to ask for Email permissions!
