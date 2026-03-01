@@ -33,7 +33,7 @@ function doPost(e) {
 
     // Write headers if sheet is empty
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
+      const headers = [
         'Timestamp',
         'First Name',
         'Email',
@@ -41,19 +41,18 @@ function doPost(e) {
         'Score (%)',
         'Tier',
         'Total Points',
-        'Q1 Answer', 'Q1 Points',
-        'Q2 Answer', 'Q2 Points',
-        'Q3 Answer', 'Q3 Points',
-        'Q4 Answer', 'Q4 Points',
-        'Q5 Answer', 'Q5 Points',
-        'Q6 Answer', 'Q6 Points',
-        'Q7 Answer', 'Q7 Points',
-        'Q8 Answer', 'Q8 Points',
-        'Q9 Answer', 'Q9 Points',
-        'Q10 Answer', 'Q10 Points',
-        'Q11 Answer', 'Q11 Points',
-        'Q12 Answer', 'Q12 Points',
-      ]);
+      ];
+
+      // Dynamically add question text to headers if available
+      if (data.answers && Array.isArray(data.answers)) {
+        data.answers.forEach((a, index) => {
+          const qNum = index + 1;
+          headers.push(`Q${qNum}: ${a.question || 'Answer'}`);
+          headers.push(`Q${qNum} Points`);
+        });
+      }
+
+      sheet.appendRow(headers);
       // Bold the header row
       sheet.getRange(1, 1, 1, sheet.getLastColumn()).setFontWeight('bold');
     }
